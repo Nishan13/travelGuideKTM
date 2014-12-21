@@ -1,0 +1,121 @@
+@media only screen and (max-device-width : 240px) {
+	#workspace .post.p-mid{
+		width: auto;
+	}
+}
+@media only screen and (max-device-width : 320px) {
+	#workspace .post.p-mid{
+		width: 46.5%;
+	}
+}
+@media only screen and (max-device-width : 360px) {
+	#workspace .post.p-mid{
+		width: 46.5%;
+	}
+}
+@media only screen and (max-device-width : 480px) {
+	#sidebar{
+		left:-65%;
+		width:60%;
+	}
+	#workspace{
+		width: 95%;
+	}
+	#workspace .post{
+		padding: 0;
+		background: none;
+		border:none;
+		width: 100%;
+	}
+	#workspace .post .mid{
+		display: none;
+	}
+	#workspace .post .desc{
+		position: absolute;
+		left: 0;
+		top:0;
+		padding: 0;
+		width: 100%;
+	}
+	#workspace .post img{
+		width: 100%;
+		background: 1px solid #ccc;
+	}
+	#workspace .post .desc .d-title{
+		background: rgba(0,0,0,0.8);
+		font-weight: normal;
+		color: #fff;
+		font-size: 18px;
+		padding: 5px;
+	}
+	#workspace .post .desc .rating{
+		bottom:4px;
+		right:0;
+		background: rgba(0,0,0,0.8);
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	#workspace .post .desc .rating .revs{
+		color: #fff;
+		font-size: 16px;
+	}
+	#workspace .post.p-mid .desc .d-title{
+		display: none;
+	}
+	#workspace .post.p-mid .desc .rating .revs{
+		display: none;
+	}
+}
+@media only screen and (min-device-width : 480px) and (max-device-width : 800px) {
+	#sidebar{
+		left:-65%;
+		width:60%;
+	}
+	#workspace{
+		width: 95%;
+	}
+	#workspace .post{
+		padding: 0;
+		background: none;
+		border:none;
+		width: 100%;
+	}
+	#workspace .post .mid{
+		display: none;
+	}
+	#workspace .post .desc{
+		position: absolute;
+		left: 0;
+		top:0;
+		padding: 0;
+		width: 100%;
+	}
+	#workspace .post img{
+		width: 100%;
+		background: 1px solid #ccc;
+	}
+	#workspace .post .desc .d-title{
+		background: rgba(0,0,0,0.8);
+		font-weight: normal;
+		color: #fff;
+		font-size: 18px;
+		padding: 5px;
+	}
+	#workspace .post .desc .rating{
+		bottom:4px;
+		right:0;
+		background: rgba(0,0,0,0.8);
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	#workspace .post .desc .rating .revs{
+		color: #fff;
+		font-size: 16px;
+	}
+	#workspace .post.p-mid .desc .d-title{
+		display: none;
+	}
+	#workspace .post.p-mid .desc .rating .revs{
+		display: none;
+	}
+}
