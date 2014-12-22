@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Heritage App</title>
+	<title>Travel Guide Kathmandu</title>
 	<link rel="stylesheet" href="system/css/main.css">
 	<link rel="stylesheet" href="system/css/responsive.css">
 </head>
@@ -10,14 +10,14 @@
 	<div id="sidebar">
 		<button class="sb_btn">&#10140;</button>
 		<ul>
-			<a href=""><li>HOME</li></a>
+			<a href="/"><li>HOME</li></a>
 			<li class="nohover">CATEGORIES
 				<ul>
-					<li><img src="system/img/temple.png" alt="">Temples</li>
-					<li><img src="system/img/museum.png" alt="">Museums</li>
-					<li><img src="system/img/park.png" alt="">Parks</li>
-					<li><img src="system/img/palace.png" alt="">Durbar Squares</li>
-					<li style="padding-left:35px">more...</li>
+					<a href="showCategories.html#temple"><li><img src="system/img/temple.png" alt="">Temples</li></a>
+					<a href="showCategories.html#museum"><li><img src="system/img/museum.png" alt="">Museums</li></a>
+					<a href="showCategories.html#park"><li><img src="system/img/park.png" alt="">Parks</li></a>
+					<a href="showCategories.html#palace"><li><img src="system/img/palace.png" alt="">Durbar Squares</li></a>
+					<a href="/"><li style="padding-left:35px">more...</li></a>
 				</ul>
 			</li>
 			<a href=""><li>FAVOURITES</li></a>
@@ -30,7 +30,7 @@
 	</header>
 	<div id="workspace">
 		<div id="trending">
-			<a href="showcase.html">
+			<a href="showcase.html" class="go">
 				<div class="post p-big">
 					<img src="system/img/pashupati.jpg" alt="">
 					<div class="desc">
@@ -44,30 +44,69 @@
 					</div>
 				</div>
 			</a>
-			<div class="post p-mid" style="margin-right:17.5px">
-				<img src="system/img/pashupati.jpg" alt="">
-				<div class="desc">
-					<p class="d-title">Pashupatinath Temple</p>
-					<div class="mid">
-						
+			<a href="showcase.html" class="go">
+				<div class="post p-mid" style="margin-right:17.5px">
+					<img src="system/img/pashupati.jpg" alt="">
+					<div class="desc">
+						<p class="d-title">Pashupatinath Temple</p>
+						<div class="mid">
+
+						</div>
+						<p class="rating"> <span class="revs">2957 reviews</span> &#10029;&#10029;&#10029;&#10029;</p>
 					</div>
-					<p class="rating"> <span class="revs">2957 reviews</span> &#10029;&#10029;&#10029;&#10029;</p>
 				</div>
-			</div>
-			<div class="post p-mid">
-				<img src="system/img/pashupati.jpg" alt="">
-				<div class="desc">
-					<p class="d-title">Pashupatinath Temple</p>
-					<div class="mid">
-						
+			</a>
+			<a href="showcase.html" class="go">
+				<div class="post p-mid">
+					<img src="system/img/pashupati.jpg" alt="">
+					<div class="desc">
+						<p class="d-title">Pashupatinath Temple</p>
+						<div class="mid">
+
+						</div>
+						<p class="rating"> <span class="revs">2957 reviews</span> &#10029;&#10029;&#10029;&#10029;</p>
 					</div>
-					<p class="rating"> <span class="revs">2957 reviews</span> &#10029;&#10029;&#10029;&#10029;</p>
 				</div>
-			</div>
+			</a>
 		</div>
 	</div>
 	<script src="system/js/jquery.min.js"></script>
 	<script src="system/js/sidebar.js"></script>
 	<script src="system/js/base.js"></script>
+	<script src="system/js/reader.js"></script>
+	<script>
+		$(function(){
+			$.ajaxSetup({
+				async: false
+			});
+			$.getJSON(HOST+"getPlaces.php",function(data){
+				console.log(data);
+				len=data.length;
+				for(i=0;i<len;i++){
+					id=data[i].id;
+					name=data[i].name;
+					desc=data[i].desc;
+					$(".go:eq("+i+")").attr("href","showcase.html#"+id);
+					$(".post:eq("+i+") .d-title").text(name);
+					$(".post:eq("+i+") .desc mid p").text(desc);
+					tempI=i;
+					$.getJSON(HOST+"getRating.php?id="+id,function(d){
+						rat=d.rating;
+						t="<span class='revs'>"+d.count+" reviews ";
+						tm="";
+						for(j=0;j<rat;j++){
+							tm+="&#10029;"
+						}
+						tm="<span style='color:#eec700'>"+tm+"</span>"
+						$(".post:eq("+tempI+") .rating").html(t+tm);
+					})
+					$.getJSON(HOST+"getPhotosLinkForPlaces.php?id="+id,function(d){
+						link=d[0].link;
+						$(".post:eq("+i+") img").attr("src",IMGLINK+link);
+					})
+				}
+			})
+		})
+	</script>
 </body>
 </html>

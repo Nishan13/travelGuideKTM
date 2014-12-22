@@ -25,22 +25,22 @@ function LoadGmaps(x,y,dx,dy) {
 	var map = new google.maps.Map(document.getElementById("map"), myOptions);
 	directionsDisplay.setMap(map);
 	
-
+	//console.log(dx,dy);
 	var request = {
 		origin: x+","+y, 
 		destination: dx+","+dy,
-		travelMode: google.maps.DirectionsTravelMode.WALKING
+		travelMode: google.maps.DirectionsTravelMode.DRIVING
 	};
 	directionsService.route(request, function(response, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
 
          // Display the distance:
-         document.getElementById('distance').innerHTML += 
-         response.routes[0].legs[0].distance.value + " meters";
+         document.getElementById('distance').innerHTML = "Distance = "+
+         response.routes[0].legs[0].distance.value/1000 + " KM";
 
          // Display the duration:
-         document.getElementById('duration').innerHTML += 
-         response.routes[0].legs[0].duration.value + " seconds";
+         document.getElementById('duration').innerHTML = "Time To Reach = "+
+         parseInt(response.routes[0].legs[0].duration.value/60) + " minutes";
 
          directionsDisplay.setDirections(response);
      }
@@ -52,8 +52,6 @@ function getGPS(){
 function showPosition(position){
 	x=position.coords.latitude;
 	y=position.coords.longitude;
-	dx=27.710453;
-	dy=85.348687;
 	LoadGmaps(x,y,dx,dy);
   //var gps = 'GPS ('+x+','+y+')';   
   //console.log(gps);
@@ -62,6 +60,9 @@ function showPosition(position){
 $(function(){
 	$("#workspace").click(function(){
 		$("#sidebar").removeClass("sb_show");
+	})
+	$("#routes").click(function(){
+		getGPS();
 	})
 	/*$("#routes").click(function(){
 		$("#map-main").addClass("mapfs");
@@ -77,4 +78,9 @@ $(function(){
 		$("#map-main").css("height","100%");
 		$("#workspace").css("z-index","100")
 	})*/
+
+$(".stock").height($(".stock").width());
+
+
 })
+

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Heritage App</title>
+	<title>Travel Guide Kathmandu</title>
 	<link rel="stylesheet" href="system/css/main.css">
 	<link rel="stylesheet" href="system/css/responsive.css">
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -11,14 +11,14 @@
 	<div id="sidebar">
 		<button class="sb_btn">&#10140;</button>
 		<ul>
-			<a href=""><li>HOME</li></a>
+			<a href="/"><li>HOME</li></a>
 			<li class="nohover">CATEGORIES
 				<ul>
-					<li><img src="system/img/temple.png" alt="">Temples</li>
-					<li><img src="system/img/museum.png" alt="">Museums</li>
-					<li><img src="system/img/park.png" alt="">Parks</li>
-					<li><img src="system/img/palace.png" alt="">Durbar Squares</li>
-					<li style="padding-left:35px">more...</li>
+					<a href="showCategories.html#temple"><li><img src="system/img/temple.png" alt="">Temples</li></a>
+					<a href="showCategories.html#museum"><li><img src="system/img/museum.png" alt="">Museums</li></a>
+					<a href="showCategories.html#park"><li><img src="system/img/park.png" alt="">Parks</li></a>
+					<a href="showCategories.html#palace"><li><img src="system/img/palace.png" alt="">Durbar Squares</li></a>
+					<a href="/"><li style="padding-left:35px">more...</li></a>
 				</ul>
 			</li>
 			<a href=""><li>FAVOURITES</li></a>
@@ -31,10 +31,22 @@
 	</header>
 	<div id="workspace">
 		<div id="main">
-			<p class="title">Pashupatinath Temple</p>
-			<img src="system/img/pashupati4.jpg" alt="">
+			<p class="title"></p>
+			<img src="system/img/pashupati4.jpg" alt="" class="shImg">
+			<p class="sub-title">Description</p>
+			<div class="descrip">
+			</div>
 			<p class="sub-title">Gallery</p>
-			<div class="gallery"></div>
+			<!--<div class="gallery" style="padding:10px">
+				<div class="stock" style="background:#48b"><img src="system/img/pashupati.jpg" alt=""></div>
+				<div class="stock" style="background:#a22"><img src="system/img/pashupati2.jpg" alt=""></div>
+				<div class="stock" style="background:#393"><img src="system/img/pashupati3.jpg" alt=""></div>
+				<div class="stock" style="background:#333"><img src="system/img/pashupati4.jpg" alt=""></div>
+			</div>-->
+			<p class="sub-title">Ratings and Reviews</p>
+			<div class="ratings"></div>
+			<div class="reviews">
+			</div>
 			<p id="routes" class="sub-title">Routes</p>
 			<div id="map-main">
 				<div id="map"></div>
@@ -49,10 +61,39 @@
 	<script src="system/js/jquery.min.js"></script>
 	<script src="system/js/sidebar.js"></script>
 	<script src="system/js/base.js"></script>
+	<script src="system/js/reader.js"></script>
 	<script>
-	//$("")
-		//LoadGmaps(27.710453,85.348687);
-		getGPS();
+		d=location.href;
+		d=d.split("#")[1];
+		$(function(){
+			$.ajaxSetup({
+				async: false
+			});
+			$.getJSON(HOST+"getPlaceInfo.php?id="+d,function(data){
+				obj=data;
+				cor=obj.coords;
+				cor=cor.split(",");
+				dx=parseFloat(cor[0]);
+				dy=parseFloat(cor[1]);
+				getGPS();
+				console.log(dx,dy);
+				$("#main .title").text(obj.name);
+				$("#main .descrip").text(obj.desc);
+				/*$.getJSON(HOST+"getPhotosLinkForPlaces.php?id="+d,function(d){
+					link=d[0].link;
+					$("#main .shImg").attr("src",IMGLINK+link);
+				})*/
+				$.getJSON(HOST+"getUserRating.php?id=1&pid="+d,function(data){
+					rt=data.rating;
+					tm="";
+					for(i=0;i<rt;i++){
+						tm+="&#10029";
+					}
+					$(".ratings").html("<span style='color:#eec700;font-size:15vw;padding-left:10px'>"+tm+"</span>")
+					$(".reviews").html("'"+data.rev+"'")
+				})
+			});
+		})
 	</script>
 </body>
 </html>
